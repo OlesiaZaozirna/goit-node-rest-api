@@ -22,16 +22,17 @@ app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
 });
-console.log(process.env);
 
-//mongoose
-// .connect(DB_HOST)
-//  .then(() => {
-//    app.listen(3000, () => {
-//     console.log("Database connection successful. Use our API on port: 3000");
-//    });
-//  })
-//  .catch((error) => {
-//    process.exit(1);
-//    console.error(error.message);
-//  });
+//console.log(process.env.DB_HOST);
+
+mongoose
+  .connect(process.env.DB_HOST)
+  .then(() => {
+    app.listen(3000, () => {
+      console.log("Database connection successful. Use our API on port: 3000");
+    });
+  })
+  .catch((error) => {
+    console.error(error.message);
+    process.exit(1);
+  });
