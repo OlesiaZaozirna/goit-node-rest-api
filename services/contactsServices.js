@@ -1,4 +1,10 @@
-import fs from "fs/promises";
+import Contact from "../models/contact.js";
+
+async function listContacts() {
+  return Contact.find();
+}
+
+/*import fs from "fs/promises";
 import path from "path";
 import { nanoid } from "nanoid";
 
@@ -11,6 +17,7 @@ async function listContacts() {
   return JSON.parse(data);
 }
 
+/*
 async function getContactById(contactId) {
   const contacts = await listContacts();
   const result = contacts.find((item) => item.id === contactId);
@@ -49,12 +56,12 @@ async function updateContactById(id, data) {
   await updateContact(contacts);
 
   return contacts[index];
-}
+}*/
 
 export {
-  listContacts,
+  listContacts /*
   getContactById,
   addContact,
   removeContact,
-  updateContactById,
+  updateContactById,*/,
 };
