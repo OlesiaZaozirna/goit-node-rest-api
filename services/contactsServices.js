@@ -4,64 +4,32 @@ async function listContacts() {
   return Contact.find();
 }
 
-/*import fs from "fs/promises";
-import path from "path";
-import { nanoid } from "nanoid";
-
-const contactsPath = path.join("db", "contacts.json");
-const updateContact = (contacts) =>
-  fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-
-async function listContacts() {
-  const data = await fs.readFile(contactsPath);
-  return JSON.parse(data);
-}
-
-/*
-async function getContactById(contactId) {
-  const contacts = await listContacts();
-  const result = contacts.find((item) => item.id === contactId);
-  return result || null;
-}
-
 async function addContact(data) {
-  const contacts = await listContacts();
-  const newContact = {
-    id: nanoid(),
-    ...data,
-  };
-  contacts.push(newContact);
-  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-  return newContact;
+  return Contact.create(data);
 }
 
-async function removeContact(contactId) {
-  const contacts = await listContacts();
-  const index = contacts.findIndex((item) => item.id === contactId);
-  if (index === -1) {
-    return null;
-  }
-  const [result] = contacts.splice(index, 1);
-  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-  return result;
+async function getContactById(id) {
+  const data = await Contact.findById(id);
+  return data;
 }
 
 async function updateContactById(id, data) {
-  const contacts = await listContacts();
-  const index = contacts.findIndex((item) => item.id === id);
-  if (index === -1) {
-    return null;
-  }
-  contacts[index] = { ...contacts[index], ...data };
-  await updateContact(contacts);
+  return Cintact.findByIdAndUpdate(id, data);
+}
 
-  return contacts[index];
-}*/
+async function removeContact(id) {
+  return Contact.findByIdAndDelete(id);
+}
+
+async function updateStatusContact(contactId, data) {
+  return Contact.findByIdAndUpdate(contactId, data, { new: true });
+}
 
 export {
-  listContacts /*
-  getContactById,
+  listContacts,
   addContact,
+  getContactById,
   removeContact,
-  updateContactById,*/,
+  updateContactById,
+  updateStatusContact,
 };

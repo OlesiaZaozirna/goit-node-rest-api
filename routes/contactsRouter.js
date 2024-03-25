@@ -9,16 +9,33 @@ import {
 
 import validateBody from "../decorators/validateBody.js";
 
+import isValidId from "../middlewares/isValidId.js";
+
 const contactsRouter = express.Router();
 
 contactsRouter.get("/", contactsControllers.getAllContacts);
 
-//contactsRouter.get("/:id", contactsControllers.getOneContact);
+contactsRouter.get("/:id", isValidId, contactsControllers.getOneContact);
 
-//contactsRouter.delete("/:id", contactsControllers.deleteContact);
+contactsRouter.delete("/:id", isValidId, contactsControllers.deleteContact);
 
-//contactsRouter.post("/", validateBody(createContactSchema), contactsControllers.createContact);
+contactsRouter.post(
+  "/",
+  validateBody(createContactSchema),
+  contactsControllers.createContact
+);
 
-//contactsRouter.put("/:id", validateBody(updateContactSchema) contactsControllers.updateContact);
+contactsRouter.put(
+  "/:id",
+  isValidId,
+  validateBody(updateContactSchema),
+  contactsControllers.updateContact
+);
+
+contactsRouter.patch(
+  "/:contactId/favorite",
+  isValidId,
+  contactsControllers.updateStatusContact
+);
 
 export default contactsRouter;
