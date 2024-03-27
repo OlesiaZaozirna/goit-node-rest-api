@@ -14,15 +14,15 @@ async function getContactById(id) {
 }
 
 async function updateContactById(id, data) {
-  return Cintact.findByIdAndUpdate(id, data);
+  return Contact.findByIdAndUpdate(id, data);
 }
 
 async function removeContact(id) {
   return Contact.findByIdAndDelete(id);
 }
 
-async function updateStatusContact(contactId, data) {
-  return Contact.findByIdAndUpdate(contactId, data, { new: true });
+async function updateStatusContact(id, data) {
+  return Contact.findByIdAndUpdate(id, data, { new: true });
 }
 
 export {

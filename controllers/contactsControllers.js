@@ -1,4 +1,5 @@
 import * as contactsServices from "../services/contactsServices.js";
+
 import HttpError from "../helpers/HttpError.js";
 
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
@@ -32,11 +33,10 @@ export const deleteContact = async (req, res) => {
   res.json(result);
 };
 
-const updateContact = async (req, res, next) => {
+const updateContact = async (req, res) => {
   const { id } = req.params;
-  const { name, email, phone } = req.body;
 
-  if (!name && !email && !phone) {
+  if (Object.keys(req.body).length === 0) {
     throw HttpError(400, "Body must have at least one field");
   }
 
@@ -48,10 +48,10 @@ const updateContact = async (req, res, next) => {
 };
 
 const updateStatusContact = async (req, res) => {
-  const { contactId } = req.params;
+  const { id } = req.params;
   const { favorite } = req.body;
 
-  const result = await contactsServices.updateStatusContact(contactId, {
+  const result = await contactsServices.updateStatusContact(id, {
     favorite,
   });
   if (!result) {
